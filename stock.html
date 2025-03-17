@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Management</title>
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <h1>Stock Management</h1>
+    <table id="stockTable">
+        <thead>
+            <tr>
+                <th>Material Type</th>
+                <th>Cost Per Gram</th>
+                <th>Quantity in Stock</th>
+                <th>Quantity Sold</th>
+                <th>Quantity Ordered</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        fetch("php/stock_management.php")
+            .then(response => response.json())
+            .then(data => {
+                let tableBody = document.querySelector("#stockTable tbody");
+                tableBody.innerHTML = "";
+                data.forEach(stock => {
+                    let row = `<tr>
+                        <td>${stock.material_type}</td>
+                        <td>${stock.cost_per_gram}</td>
+                        <td>${stock.quantity_in_stock}</td>
+                        <td>${stock.quantity_sold}</td>
+                        <td>${stock.quantity_ordered}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Report</title>
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <h1>Inventory Report</h1>
+    <table id="reportTable">
+        <thead>
+            <tr>
+                <th>Material Type</th>
+                <th>Total Stock</th>
+                <th>Total Sold</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        fetch("php/inventory_report.php")
+            .then(response => response.json())
+            .then(data => {
+                let tableBody = document.querySelector("#reportTable tbody");
+                tableBody.innerHTML = "";
+                data.forEach(report => {
+                    let row = `<tr>
+                        <td>${report.material_type}</td>
+                        <td>${report.total_stock}</td>
+                        <td>${report.total_sold}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+</html>

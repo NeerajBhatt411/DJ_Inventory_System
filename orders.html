@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Orders</title>
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <h1>Client Orders</h1>
+    <table id="ordersTable">
+        <thead>
+            <tr>
+                <th>Material Type</th>
+                <th>Weight</th>
+                <th>Total Cost</th>
+                <th>Order Status</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        fetch("php/client_orders.php")
+            .then(response => response.json())
+            .then(data => {
+                let tableBody = document.querySelector("#ordersTable tbody");
+                tableBody.innerHTML = "";
+                data.forEach(order => {
+                    let row = `<tr>
+                        <td>${order.material_type}</td>
+                        <td>${order.weight}</td>
+                        <td>${order.total_cost}</td>
+                        <td>${order.order_status}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+</html>
