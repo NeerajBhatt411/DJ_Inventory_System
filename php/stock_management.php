@@ -1,5 +1,7 @@
 <?php
 session_start();
+ob_start(); // ✅ Output buffering enable
+
 include 'db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        if ($password === $user['password']) {  // Password hash use karo for security
+        if ($password === $user['password']) {  // ⚠️ Hashing use karo for security
             $_SESSION['username'] = $username;
 
             // ✅ Redirect to Stock Management Page
@@ -27,4 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('❌ User Not Found!'); window.location.href='login.html';</script>";
     }
 }
+
+ob_end_flush(); // ✅ Flush buffer
 ?>
